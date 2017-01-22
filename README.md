@@ -1,6 +1,14 @@
 # wordpress-sucks
 A suck ass wordpress setup
 
+## Get Started
+
+```
+$ git clone https://github.com/samuelngs/wordpress-sucks.git
+$ cd wordpress-sucks
+$ docker-compose up -d
+```
+
 ## License
 
 This project is distributed under the WTFPL license found in the [LICENSE](./LICENSE) file.
