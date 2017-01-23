@@ -3,10 +3,25 @@ A suck ass wordpress setup
 
 ## Get Started
 
+#### Installation
 ```
 $ git clone https://github.com/samuelngs/wordpress-sucks.git
 $ cd wordpress-sucks
-$ docker-compose up -d
+```
+
+#### Run development
+```
+$ make up
+```
+
+#### Stop server
+```
+$ make stop
+```
+
+#### Remove everything
+```
+$ make rm
 ```
 
 ## License
