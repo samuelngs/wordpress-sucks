@@ -1,0 +1,25 @@
+{
+  "name": "wordpress-sucks",
+  "description": "A suck ass wordpress setup",
+  "author": "Samuel Ng",
+  "license": "GPL-3.0",
+  "homepage": "https://github.com/samuelngs/wordpress-sucks#readme",
+  "scripts": {
+    "start": "node ./core/cmd.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samuelngs/wordpress-sucks.git"
+  },
+  "keywords": [
+    "wordpress",
+    "suck ass",
+    "setup"
+  ],
+  "bugs": {
+    "url": "https://github.com/samuelngs/wordpress-sucks/issues"
+  },
+  "dependencies": {
+    "webpack": "beta"
+  }
+}
