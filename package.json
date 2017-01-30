@@ -20,6 +20,7 @@
     "url": "https://github.com/samuelngs/wordpress-sucks/issues"
   },
   "dependencies": {
-    "webpack": "beta"
+    "webpack": "2.2.0",
+    "webpack-dev-server": "2.2.0"
   }
 }
