@@ -19,8 +19,14 @@
   "bugs": {
     "url": "https://github.com/samuelngs/wordpress-sucks/issues"
   },
-  "dependencies": {
+  "devDependencies": {
     "webpack": "2.2.0",
-    "webpack-dev-server": "2.2.0"
+    "webpack-dev-server": "2.2.0",
+    "postcss-loader": "^1.2.2",
+    "style-loader": "^0.13.1",
+    "file-loader": "^0.10.0",
+    "css-loader": "^0.26.1",
+    "url-loader": "^0.5.7",
+    "extract-text-webpack-plugin": "2.0.0-rc.2"
   }
 }

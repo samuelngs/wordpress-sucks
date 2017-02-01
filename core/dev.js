@@ -1,9 +1,14 @@
 
-const webpack = require('webpack');
-const webpackDevServer = require('webpack-dev-server');
+const Webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
+
+const { onError, onProxyRes } = require('./dev.proxy');
+const server = require('./dev.server');
+const client = require('./dev.client');
 
 const webpackDevConfig = {
   hot: true,
+  compress: true,
   headers: {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Expose-Headers': 'SourceMap,X-SourceMap',
@@ -12,7 +17,6 @@ const webpackDevConfig = {
     aggregateTimeout: 300,
     poll: false,
   },
-  historyApiFallback: true,
   inline: true,
   quiet: false,
   noInfo: false,
@@ -26,11 +30,25 @@ const webpackDevConfig = {
     warnings: false,
     chunkModules: false,
   },
-  outputPath: __dirname,
+  proxy: [
+    {
+      path: '**',
+      target: 'http://0:8080',
+      secure: false,
+      changeOrigin: true,
+      onError,
+      onProxyRes,
+    }
+  ]
 };
 
-module.exports = () => {
-  return new webpackDevServer(webpack([
-  ]), webpackDevConfig).listen(5001, '0.0.0.0', err => {
+module.exports = (theme, dir) => {
+  const compiler = Webpack([
+    server(theme, dir),
+    client(theme, dir),
+  ]);
+  const dev = new WebpackDevServer(compiler, webpackDevConfig);
+  dev.listen(5001, '127.0.0.1', err => {
+    console.log('Server running on port 5001');
   });
 }

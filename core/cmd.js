@@ -21,4 +21,6 @@ if (!fs.existsSync(themePath)) {
   return;
 }
 
-production ? prod() : dev();
+const fn = production ? prod : dev;
+
+fn(theme, themePath);
