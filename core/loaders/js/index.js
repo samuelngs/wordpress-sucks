@@ -1,12 +1,17 @@
 
 module.exports = function (source, map) {
 
-  const callback = this.async();
+  const { cacheable, async, resourcePath, loaders, loaderIndex } = this;
 
   /**
    * execute cacheable
    */
-  this.cacheable && this.cacheable();
+  cacheable();
+
+  /**
+   * execute async mode
+   */
+  const callback = async();
 
   /**
    * return modified source code

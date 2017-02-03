@@ -2,10 +2,10 @@
 const path = require('path');
 const webpack = require('webpack');
 
-module.exports = (theme, dir) => ({
+module.exports = options => ({
   name: 'client',
   target: 'web',
-  context: dir,
+  context: options.src.abs,
   devtool: 'eval',
   entry: [
     'webpack-dev-server/client?http://localhost:5001',
@@ -14,14 +14,14 @@ module.exports = (theme, dir) => ({
   ],
   output: {
     filename: 'client.js',
-    publicPath: `http://localhost:5001/`,
+    publicPath: '/',
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
-      'process.env.THEME': JSON.stringify(theme),
-      'process.env.THEME_PATH': JSON.stringify(dir),
+      'process.env.THEME': JSON.stringify(options.src.name),
+      'process.env.THEME_PATH': JSON.stringify(options.src.abs),
     }),
   ],
 });

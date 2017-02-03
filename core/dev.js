@@ -42,10 +42,10 @@ const webpackDevConfig = {
   ]
 };
 
-module.exports = (theme, dir) => {
+module.exports = (options) => {
   const compiler = Webpack([
-    server(theme, dir),
-    client(theme, dir),
+    server(options),
+    client(options),
   ]);
   const dev = new WebpackDevServer(compiler, webpackDevConfig);
   dev.listen(5001, '127.0.0.1', err => {
