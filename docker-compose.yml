@@ -1,15 +1,39 @@
-mysql:
-  image: mariadb
-  environment:
-    MYSQL_ROOT_PASSWORD: password
-wordpress:
-  image: wordpress
-  volumes:
-    - ./plugins:/var/www/html/wp-content/plugins
-    - ./themes:/var/www/html/wp-content/themes
-  ports:
-    - 8080:80
-  environment:
-    WORDPRESS_DB_PASSWORD: password
-  links:
-    - mysql
+
+version: '2'
+
+services:
+  db:
+    image: mariadb
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    networks:
+      - db
+  wordpress:
+    image: wordpress
+    depends_on:
+      - db
+    volumes:
+      - ./plugins:/var/www/html/wp-content/plugins
+      - theme:/var/www/html/wp-content/themes/default
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_PASSWORD: password
+    networks:
+      - db
+#  dev:
+#    image: node:6.9.5-alpine
+#    depends_on:
+#      - wordpress
+#    volumes:
+#      - theme:/theme
+
+volumes:
+  db:
+  theme:
+
+networks:
+  db:
