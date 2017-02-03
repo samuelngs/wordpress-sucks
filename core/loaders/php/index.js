@@ -46,7 +46,7 @@ module.exports = function (source, map) {
         if (err || !stats.isFile()) {
           return resolve(-1);
         }
-        return resolve(`exports['${file}'] = require('${file}')`);
+        return resolve(`exports['${path.join(outPathRel, val)}'] = require('${file}')`);
       });
     }));
   }
@@ -60,7 +60,10 @@ module.exports = function (source, map) {
    * export dependencies
    */
   Promise.all(resolve).then(exports => {
-    callback(null, exports.filter(n => n !== -1).join('\n'), map);
+    const output = `${exports.filter(n => n !== -1).join('\n')}
+module.exports = ${JSON.stringify(source)};`;
+    this.value = JSON.stringify(source);
+    callback(null, output, map);
   }, err => {
     callback(err);
   });

@@ -31,5 +31,5 @@ module.exports = function (source, map) {
    */
   this.emitFile(out, source);
 
-  callback(null, source, map);
+  return callback(null, `exports['${resourcePath}'] = '${out}'`, map);
 }
