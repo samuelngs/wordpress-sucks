@@ -2,7 +2,7 @@
 // [client] wordpress-sucks helper
 //
 
-console.log('client');
+require(`${process.env.THEME_PATH}/theme.resource`);
 
 if (module.hot) {
   module.hot.accept();

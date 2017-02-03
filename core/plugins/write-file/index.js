@@ -136,7 +136,7 @@ module.exports = function (userOptions = {}) {
           if (options.useHashIndex) {
             const assetSourceHash = createHash('sha256').update(assetSource).digest('hex');
 
-            if (assetSourceHashIndex[assetPath] && assetSourceHashIndex[assetPath] === assetSourceHash) {
+            if (assetSourceHashIndex[assetPath] && assetSourceHashIndex[assetPath] === assetSourceHash && fs.existsSync(assetPath)) {
               log(targetDefinition, '[skipped; matched hash index]');
 
               return;
@@ -147,7 +147,8 @@ module.exports = function (userOptions = {}) {
 
           const filename = relativeOutputPath.split('?')[0];
 
-          if (filename.indexOf('.hot-update.js') > -1) {
+          if (filename.indexOf('.hot-update.js') > -1 || filename.indexOf('/node_modules/') > -1) {
+            log(targetDefinition, '[skipped; file ignored]');
             return;
           }
 
@@ -162,9 +163,11 @@ module.exports = function (userOptions = {}) {
           const targetDefinition = 'asset: ' + './' + file;
           const relativeOutputPath = path.relative(process.cwd(), file);
 
-          log(targetDefinition, '[deleted]');
+          if (fs.existsSync(relativeOutputPath.split('?')[0])) {
+            log(targetDefinition, '[deleted]');
 
-          fs.unlinkSync(relativeOutputPath.split('?')[0]);
+            fs.unlinkSync(relativeOutputPath.split('?')[0]);
+          }
         });
 
       });

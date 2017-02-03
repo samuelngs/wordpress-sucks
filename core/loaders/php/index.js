@@ -61,8 +61,16 @@ module.exports = function (source, map) {
    */
   Promise.all(resolve).then(exports => {
     const output = `${exports.filter(n => n !== -1).join('\n')}
-module.exports = ${JSON.stringify(source)};`;
-    this.value = JSON.stringify(source);
+module.exports = ${JSON.stringify(source)};
+if (module.hot) {
+  module.hot.accept(function() {
+    location.reload();
+  });
+  module.hot.dispose(function() {
+    location.reload();
+  });
+}
+`;
     callback(null, output, map);
   }, err => {
     callback(err);

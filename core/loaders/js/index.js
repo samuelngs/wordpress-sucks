@@ -31,5 +31,12 @@ module.exports = function (source, map) {
    */
   this.emitFile(out, source);
 
+  const output = `
+${source}
+if (module.hot) {
+  module.hot.accept();
+}
+`;
+
   callback(null, source, map);
 }

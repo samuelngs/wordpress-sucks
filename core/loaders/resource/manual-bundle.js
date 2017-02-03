@@ -58,8 +58,12 @@ module.exports = function (source, map) {
   Promise.all(resolve).then(exports => {
     const output = `
 ${exports.join('\n')}
-module.exports = ${JSON.stringify(source)}`;
-    callback(null, output, map);
+module.exports = ${JSON.stringify(source)}
+if (module.hot) {
+  module.hot.accept();
+}
+`
+    callback(null, output);
   }, err => {
     callback(err);
   });

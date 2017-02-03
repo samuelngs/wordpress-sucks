@@ -5,40 +5,48 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const WriteFilePlugin = require('./plugins/write-file');
-const WatchFilePlugin = require('./plugins/watch-file');
 
 module.exports = (options) => ({
-  name: 'server',
-  target: 'node',
+  name: 'wordpress',
+  target: 'web',
   context: options.src.abs,
   devtool: 'eval',
   entry: [
     'babel-polyfill',
-    'webpack/hot/signal',
-    path.join(__dirname, 'server.js'),
+    'webpack-dev-server/client?http://localhost:5001',
+    'webpack/hot/only-dev-server',
+    path.join(__dirname, 'client.js'),
   ],
   output: {
-    filename: `${options.out.rel}/server.js`,
-    publicPath: '/',
-    libraryTarget: 'commonjs2',
+    filename: `${options.out.rel}/client.js`,
+    publicPath: `/`,
   },
   module: {
     rules: [
       {
         test: /\.resource$/,
         use: { loader: path.join(__dirname, 'loaders', 'resource'), options },
+        exclude: /node_modules/,
       },
       {
-        test: /\.php$/,
+        test: /\.(ttf|otf|eot|woff|woff2|svg|ico|webm|mp4|ogg|png|jpg|jpeg|gif|webp)$/,
+        use: { loader: path.join(__dirname, 'loaders', 'binary'), options },
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.(php|twig)$/,
         use: { loader: path.join(__dirname, 'loaders', 'php'), options },
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/,
         use: { loader: path.join(__dirname, 'loaders', 'css'), options },
+        exclude: /node_modules/,
       },
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         use: { loader: path.join(__dirname, 'loaders', 'js'), options },
+        exclude: /node_modules/,
       },
       {
         test: /\.js$|\.jsx$/,
@@ -66,12 +74,12 @@ module.exports = (options) => ({
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.NamedModulesPlugin(),
     new webpack.DefinePlugin({
       'process.env.THEME': JSON.stringify(options.src.name),
       'process.env.THEME_PATH': JSON.stringify(options.src.abs),
     }),
     new ExtractTextPlugin(`${options.out.rel}/styles.css`),
-    new WatchFilePlugin(options),
     new WriteFilePlugin({
       test: new RegExp(`\.(${options.extensions.join('|')})$`),
       output: options.out,

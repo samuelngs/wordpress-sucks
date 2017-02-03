@@ -3,8 +3,7 @@ const Webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 
 const { onError, onProxyRes } = require('./dev.proxy');
-const server = require('./dev.server');
-const client = require('./dev.client');
+const wordpress = require('./dev.wordpress');
 
 const webpackDevConfig = {
   hot: true,
@@ -39,13 +38,12 @@ const webpackDevConfig = {
       onError,
       onProxyRes,
     }
-  ]
+  ],
 };
 
 module.exports = (options) => {
   const compiler = Webpack([
-    server(options),
-    client(options),
+    wordpress(options),
   ]);
   const dev = new WebpackDevServer(compiler, webpackDevConfig);
   dev.listen(5001, '127.0.0.1', err => {

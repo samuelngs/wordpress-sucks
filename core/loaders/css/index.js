@@ -75,12 +75,32 @@ module.exports = function (source, map) {
 
   }).then(src => {
 
+    const file = path.join(outPathRel, dir.out);
+
     /**
      * write resource to disk
      */
-    this.emitFile(`${path.join(outPathRel, dir.out)}.php`, src);
+    this.emitFile(`${file}.php`, src);
 
-    return callback(null, source, map);
+    const output = `
+${source}
+if (module.hot) {
+  module.hot.accept();
+  for ( var i = 0, els = document.querySelectorAll('link[href*="${file}"]'); i < els.length; i++ ) {
+    els[i].link = '${file}?dur=${new Date().getTime()}';
+  }
+  for ( var i = 0, els = document.querySelectorAll('link[href*="${outPathRel}/styles.css"]'); i < els.length; i++ ) {
+    els[i].link = '${outPathRel}/styles.css?dur=${new Date().getTime()}';
+  }
+  module.hot.dispose(function() {
+    for ( var i = 0, els = document.querySelectorAll('link[href*="${file}"]'); i < els.length; i++ ) {
+      els[i] && els[i].parentNode && els[i].parentNode.removeChild(els[i]);
+    }
+  });
+}
+`;
+
+    return callback(null, output, map);
 
   }).catch(err => {
 

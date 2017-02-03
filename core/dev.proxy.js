@@ -1,7 +1,7 @@
 
 const zlib = require('zlib');
 
-const injection = '<script src="/client.js"></script>';
+const injection = '<script src="/wp-content/themes/default/client.js"></script>';
 
 const inject = body => {
   if ( body.indexOf( '</body>' ) > -1 ) {
