@@ -2,7 +2,7 @@
 const Webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 
-const { onError, onProxyRes } = require('./dev.proxy');
+const { onError, onProxyReq, onProxyRes } = require('./dev.proxy');
 const wordpress = require('./dev.wordpress');
 
 const webpackDevConfig = {
@@ -32,8 +32,11 @@ const webpackDevConfig = {
   proxy: [
     {
       path: '**',
-      target: 'http://0:8080',
+      target: `http://${process.env.WP_TARGET_HOST || 0}:${process.env.WP_TARGET_PORT || 80}`,
       secure: false,
+      xfwd: true,
+      autoRewrite: true,
+      hostRewrite: `${process.env.WP_PROXY_HOST || 'localhost'}:${process.env.WP_PROXY_PORT || 5001}`,
       changeOrigin: true,
       onError,
       onProxyRes,
@@ -46,7 +49,7 @@ module.exports = (options) => {
     wordpress(options),
   ]);
   const dev = new WebpackDevServer(compiler, webpackDevConfig);
-  dev.listen(5001, '127.0.0.1', err => {
-    console.log('Server running on port 5001');
+  dev.listen(process.env.WP_PROXY_PORT || 5001, process.env.WP_PROXY_ADDR || '127.0.0.1', err => {
+    console.log(`Server running on port ${process.env.WP_PROXY_PORT || 5001}`);
   });
 }

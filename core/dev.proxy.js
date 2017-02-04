@@ -3,6 +3,8 @@ const zlib = require('zlib');
 
 const injection = '<script src="/wp-content/themes/default/client.js"></script>';
 
+const regex = new RegExp(`${process.env.WP_TARGET_HOST || 'localhost'}:${process.env.WP_TARGET_PORT || 80}`, 'g');
+
 const inject = body => {
   if ( body.indexOf( '</body>' ) > -1 ) {
     body = body.replace( '</body>', injection + '</body>' );
@@ -11,7 +13,7 @@ const inject = body => {
   } else {
     body = body + injection;
   }
-  body = body.replace(/localhost:8080/g, 'localhost:5001');
+  body = body.replace(regex, `${process.env.WP_PROXY_HOST || 'localhost'}:${process.env.WP_PROXY_PORT || 5001}`);
   return body;
 }
 

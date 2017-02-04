@@ -13,11 +13,12 @@ module.exports = (options) => ({
   devtool: 'eval',
   entry: [
     'babel-polyfill',
-    'webpack-dev-server/client?http://localhost:5001',
+    `webpack-dev-server/client?http://localhost:${process.env.WP_PROXY_PORT || 5001}`,
     'webpack/hot/only-dev-server',
     path.join(__dirname, 'client.js'),
   ],
   output: {
+    path: path.join(__dirname, '..'),
     filename: `${options.out.rel}/client.js`,
     publicPath: `/`,
   },
@@ -79,7 +80,7 @@ module.exports = (options) => ({
       'process.env.THEME': JSON.stringify(options.src.name),
       'process.env.THEME_PATH': JSON.stringify(options.src.abs),
     }),
-    new ExtractTextPlugin(`${options.out.rel}/styles.css`),
+    new ExtractTextPlugin(`${options.out.rel}/style.css`),
     new WriteFilePlugin({
       test: new RegExp(`\.(${options.extensions.join('|')})$`),
       output: options.out,

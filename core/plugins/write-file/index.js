@@ -85,11 +85,7 @@ module.exports = function (userOptions = {}) {
       }
 
       if (!outputPath) {
-        if (!_.has(compiler, 'options.devServer.outputPath')) {
-          throw new Error('output.path is not accessible and devServer.outputPath is not defined. Define devServer.outputPath.');
-        }
-
-        outputPath = compiler.options.devServer.outputPath;
+        outputPath = path.join(__dirname, '..', '..', '..');
       }
 
       log('compiler.options.devServer.outputPath is "' + outputPath + '".');

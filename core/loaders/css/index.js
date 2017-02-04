@@ -89,8 +89,8 @@ if (module.hot) {
   for ( var i = 0, els = document.querySelectorAll('link[href*="${file}"]'); i < els.length; i++ ) {
     els[i].link = '${file}?dur=${new Date().getTime()}';
   }
-  for ( var i = 0, els = document.querySelectorAll('link[href*="${outPathRel}/styles.css"]'); i < els.length; i++ ) {
-    els[i].link = '${outPathRel}/styles.css?dur=${new Date().getTime()}';
+  for ( var i = 0, els = document.querySelectorAll('link[href*="${outPathRel}/style.css"]'); i < els.length; i++ ) {
+    els[i].link = '${outPathRel}/style.css?dur=${new Date().getTime()}';
   }
   module.hot.dispose(function() {
     for ( var i = 0, els = document.querySelectorAll('link[href*="${file}"]'); i < els.length; i++ ) {
