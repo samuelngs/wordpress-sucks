@@ -5,7 +5,8 @@
   "license": "GPL-3.0",
   "homepage": "https://github.com/samuelngs/wordpress-sucks#readme",
   "scripts": {
-    "start": "node ./core/cmd.js"
+    "start": "node ./core/cmd.js",
+    "image": "docker build --no-cache --tag wordpress-sucks:latest ."
   },
   "repository": {
     "type": "git",
