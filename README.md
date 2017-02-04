@@ -7,21 +7,39 @@ A suck ass wordpress setup
 ```
 $ git clone https://github.com/samuelngs/wordpress-sucks.git
 $ cd wordpress-sucks
+$ mkdir -p theme
+$ touch theme/index.php theme/theme.resource
+$ # ready to go!
+```
+
+#### Project structure
+```
+wordpress-sucks [root]
+├── plugins				# all plugins should be installed here
+└── theme				# theme development files
+    └── theme.resource	# theme resource configuration
+    └── [your_code]
+```
+
+#### Resource configuration
+```
+index.php
+[custom-page-filename-etc].php
 ```
 
 #### Run development
 ```
-$ make up
+$ make up # or docker-compose up -d
 ```
 
 #### Stop server
 ```
-$ make stop
+$ make stop # or docker-compose stop
 ```
 
 #### Remove everything
 ```
-$ make rm
+$ make rm # or docker-compose rm -f
 ```
 
 ## License
