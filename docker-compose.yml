@@ -11,7 +11,7 @@ services:
     networks:
       - db
   wordpress:
-    image: wordpress
+    image: wordpress:4.7.2
     depends_on:
       - db
     volumes:
@@ -23,10 +23,9 @@ services:
     networks:
       - db
       - wp
-    ports:
-      - 8080:80
   dev:
-    image: wordpress-sucks:latest
+    build: .
+    image: wordpress-sucks:0.0.1
     volumes:
       - ./theme:/theme
       - theme:/wp-content/themes/default
