@@ -2,7 +2,7 @@
   "name": "wordpress-sucks",
   "description": "A suck ass wordpress setup",
   "author": "Samuel Ng",
-  "license": "GPL-3.0",
+  "license": "WTFPL",
   "homepage": "https://github.com/samuelngs/wordpress-sucks#readme",
   "scripts": {
     "start": "node ./core/cmd.js",
