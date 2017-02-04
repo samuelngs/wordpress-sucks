@@ -15,9 +15,9 @@ $ # ready to go!
 #### Project structure
 ```
 wordpress-sucks [root]
-├── plugins				        # all plugins should be installed here
-└── theme				          # theme development files
-    └── theme.resource	# theme resource configuration
+├── plugins *[all plugins should be installed here]
+└── theme *[theme development files]
+    └── theme.resource	*[theme resource configuration]
     └── [your_code]
 ```
 
