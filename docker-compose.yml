@@ -25,7 +25,7 @@ services:
       - wp
   dev:
     build: .
-    image: wordpress-sucks:0.0.1
+    image: wordpress-sucks:0.0.2
     volumes:
       - ./theme:/theme
       - theme:/wp-content/themes/default

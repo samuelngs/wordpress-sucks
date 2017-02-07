@@ -2,6 +2,8 @@
 const path = require('path');
 
 const prepend = `
+<?php
+
 $styles = array(
 `
 
@@ -9,6 +11,8 @@ const builder = (o) => Object.keys(o).map(k => `  "${k}"  =>  "${o[k]}", `).join
 
 const append = `
 );
+
+?>
 `
 
 module.exports = function (source, map) {
